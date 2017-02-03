@@ -1,6 +1,25 @@
 # connect4
 An implementation of https://github.com/michaeldfallen/coding-tests/blob/master/Connect_4.md
 
+## Abstract
+
+### Authorization
+
+To keep thing simple, players are only identified by their username, sent directly as the `Authorization` header.
+This should be refactored to use Spring Security and at least the basic HTTP authentication.
+
+### Spring
+
+This implementation uses Spring Boot so as to easily take advantage of the dependency injection, dispatcher servlet and REST controllers, json serialisation, etc...
+
+### Repository
+
+The game boards are currently stored in memory. However, this is done through a minimalistic implementation of Spring Data's `CrudRepository` so that an actual database, like MongoDB, can easily be plugged instead with `spring-boot-starter-data-mongodb`.
+
+### Docker
+
+The game can be run with Docker to facilitate a deployment in CI or production. This also allows an easier integration with a database instance in a 2nd container linked via `docker-compose`.
+
 ## Build and run
 
 with Java:
