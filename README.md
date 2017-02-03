@@ -24,7 +24,7 @@ The game can be run with Docker to facilitate a deployment in CI or production. 
 
 with Java:
 
-`mvn clean mvn spring-boot:run`
+`mvn clean spring-boot:run`
 
 with Docker:
 
