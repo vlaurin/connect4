@@ -82,7 +82,7 @@ public class GameBoard {
             throw new NotPlayerTurnException();
         }
 
-        if (column < 0 || column >= columns.length) {
+        if (column == null || column < 0 || column >= columns.length) {
             throw new ColumnOutOfBoundsException();
         }
     }

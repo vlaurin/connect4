@@ -2,6 +2,8 @@ package eu.vlaurin.connect4.service;
 
 import eu.vlaurin.connect4.dto.Players;
 import eu.vlaurin.connect4.dto.Turn;
+import eu.vlaurin.connect4.exception.UnauthorizedPlayerException;
+import eu.vlaurin.connect4.exception.ValidationException;
 import eu.vlaurin.connect4.model.GameBoard;
 import eu.vlaurin.connect4.model.Player;
 import eu.vlaurin.connect4.repository.GameBoardRepository;
@@ -20,13 +22,21 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public GameBoard create(Players players) {
-        // TODO Validation
+        // Validation
+        // TODO Use Hibernate validator
+        if (players.getUsername1() == null) {
+            throw new ValidationException("Missing username 1");
+        } else if (players.getUsername2() == null) {
+            throw new ValidationException("Missing username 2");
+        } else if (players.getColour1() == null) {
+            throw new ValidationException("Missing colour 1");
+        } else if (players.getColour2() == null) {
+            throw new ValidationException("Missing colour 2");
+        }
 
         final Player player1 = new Player(players.getUsername1(), players.getColour1());
         final Player player2 = new Player(players.getUsername2(), players.getColour2());
         final GameBoard gameBoard = new GameBoard(player1, player2);
-
-        // TODO Handle exception
 
         repository.save(gameBoard);
 
@@ -38,10 +48,8 @@ public class GameServiceImpl implements GameService {
         final GameBoard gameBoard = repository.findOne(gameId);
 
         if (null == gameBoard) {
-            // TODO Exception
+            return null;
         }
-
-        // TODO Validation
 
         final Player[] players = gameBoard.getPlayers();
         Player player = null;
@@ -50,24 +58,16 @@ public class GameServiceImpl implements GameService {
         } else if (players[1].getUsername().equals(username)) {
             player = players[1];
         } else {
-            // TODO ERROR
+            throw new UnauthorizedPlayerException();
         }
 
         gameBoard.play(player, turn.getColumn());
-
-        // TODO Handle exception
 
         return gameBoard;
     }
 
     @Override
     public GameBoard retrieve(Long gameId) {
-        final GameBoard gameBoard = repository.findOne(gameId);
-
-        if (null == gameBoard) {
-            // TODO Exception
-        }
-
-        return gameBoard;
+        return repository.findOne(gameId);
     }
 }

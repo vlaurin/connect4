@@ -137,6 +137,11 @@ public class GameBoardTest {
             gameBoard.play(player2, 0);
         }
 
+        @Test(expected = ColumnOutOfBoundsException.class)
+        public void shouldNotBeAllowedToPlayNullColumn() {
+            gameBoard.play(player1, null);
+        }
+
         @Test
         public void playingShouldDropMatchingColourDiscInColumn() {
             gameBoard.play(player1, 0);
