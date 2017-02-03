@@ -13,6 +13,7 @@ public class GameBoard {
 
     public final static Integer COLUMN_COUNT = 7;
 
+    private Long id;
     private State state;
     private GameBoardColumn[] columns;
     private Player[] players;
@@ -27,7 +28,7 @@ public class GameBoard {
         state = State.NEW;
         columns = new GameBoardColumn[COLUMN_COUNT];
         for (int i = 0; i < columns.length; i++) {
-            columns[i] = null;
+            columns[i] = new GameBoardColumn();
         }
         players = new Player[]{player1, player2};
         nextPlayer = 0;
@@ -153,6 +154,14 @@ public class GameBoard {
             }
         }
         return true;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public enum State {
