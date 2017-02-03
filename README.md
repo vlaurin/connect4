@@ -1,6 +1,16 @@
 # connect4
 An implementation of https://github.com/michaeldfallen/coding-tests/blob/master/Connect_4.md
 
+## Build and run
+
+with Java:
+
+`mvn clean mvn spring-boot:run`
+
+with Docker:
+
+`mvn clean package docker:build && docker run -p 8080:8080 connect4`
+
 ## API
 
 ### POST /games
